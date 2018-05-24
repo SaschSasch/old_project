@@ -1,0 +1,6 @@
+INSERT INTO designer( name )
+VALUES (
+"Dolce & Gabbana"
+), (
+"Louis Vuitton"
+);

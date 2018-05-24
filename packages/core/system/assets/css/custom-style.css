@@ -1,0 +1,9 @@
+.description {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.full-description:first-letter {
+  text-transform: capitalize;
+}

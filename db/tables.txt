@@ -1,0 +1,27 @@
+create table designer(
+    id_designer int auto_increment primary key,
+    name char(50) not null
+);
+
+create table material(
+	id_material int auto_increment primary key,
+    id_parent int,
+    name char(50) not null,
+    level_number int,
+    description text
+);
+
+create table colour(
+	id_colour int auto_increment primary key,
+    name char(50) not null
+);
+
+create table styles(
+	id_style int auto_increment primary key,
+    id_parent int,
+    children_count int,
+    level_number int,
+    name char(50) not null,
+    description text,
+   	photo text
+);
