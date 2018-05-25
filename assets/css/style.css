@@ -847,6 +847,8 @@ footer {
 }
 
 .portfolio-box img {
+  max-height: 15vh !important;
+  min-height: 15vh !important;
 	-o-transition: all .3s; -moz-transition: all .3s; -webkit-transition: all .3s; -ms-transition: all .3s; transition: all .3s;
 }
 .portfolio-box:hover img { opacity: 0.7; }
