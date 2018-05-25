@@ -7,30 +7,15 @@
 					<ul class="slides">
 						<li data-thumb="/assets/img/slider/1.jpg">
 							<img src="/assets/img/slider/1.jpg">
-							<!--  <div class="flex-caption">
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
-							</div> -->
 						</li>
 						<li data-thumb="/assets/img/slider/2.jpg">
 							<img src="/assets/img/slider/2.jpg">
-							<!--      <div class="flex-caption">
-								Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit
-								lobortis nisl ut aliquip ex ea commodo consequat.
-							</div> -->
 						</li>
 						<li data-thumb="/assets/img/slider/3.jpg">
 							<img src="/assets/img/slider/3.jpg">
-							<!--  <div class="flex-caption">
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et.
-								Lorem ipsum dolor sit amet, consectetur.
-							</div> -->
 						</li>
 						<li data-thumb="/assets/img/slider/4.jpg">
 							<img src="/assets/img/slider/4.jpg">
-							<!--  <div class="flex-caption">
-								Узнай современные стили! Их история наполнена смыслом
-							</div> -->
 						</li>
 					</ul>
 				</div>
