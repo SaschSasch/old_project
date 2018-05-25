@@ -18,10 +18,16 @@
 
         <div class="masthead clearfix">
           <div class="inner">
-            <h3 class="masthead-brand"><a href="../packages/core/system/views/index.html">Диплом</a></h3>
+            <h3 class="masthead-brand">
+              <a href="../packages/core/system/views/index.html">Диплом</a>
+            </h3>
             <ul class="nav masthead-nav">
-              <li class="active"><a href="#">Домашняя страница</a></li>
-              <li class=""><a href="packages/core/system/views/sign-up.html">Регистрация</a></li>
+              <li class="active">
+                <a href="#">Домашняя страница</a>
+              </li>
+              <li class="">
+                <a href="packages/core/system/views/sign-up.html">Регистрация</a>
+              </li>
             </ul>
           </div>
         </div>

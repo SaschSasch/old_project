@@ -124,7 +124,8 @@ a.big-link-3:active {
 ul.navbar-nav {
 	font-size: 14px;
 	color: #888;
-	text-transform: uppercase;
+    text-transform: uppercase;
+    text-align: center;
 }
 
 ul.navbar-nav li a { padding: 23px 20px; background: #fff; border-top: 5px solid #fff; color: #5d5d5d; }

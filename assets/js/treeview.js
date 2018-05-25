@@ -6,6 +6,12 @@
 		return {
 			checked: [],
 			tree: [],
+			state: {
+				checked: false,
+				disabled: false,
+				expanded: false,
+				selected: false
+			},
 
 			defaultOpts: {
 				bootstrap2: false,
@@ -24,6 +30,11 @@
 						this.checked.pop(checked.indexOf(data.id));
 				},
 				data: this.tree
+			},
+			
+			setNodesState(preState) {
+				this.state = Object.assign({}, this.state, preState);
+				return this;
 			},
 
 			getOpts(preOpts) {
@@ -55,12 +66,7 @@
 						text: name,
 						backColor: id === selected ? '#ede8ff9e' : '', 
 						color: id === selected ? '#0e0e0e' : '',
-						state: {
-							checked: false,
-							disabled: false,
-							expanded: true,
-							selected: false
-						},
+						state: this.state,
 						nodes: this.getTree(array, id, selected, false),
 					};
 				});
