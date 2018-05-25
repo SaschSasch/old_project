@@ -2,7 +2,7 @@
 'use strict';
 
 (function (window) {
-	const TreeViewService = function () {
+	window.TreeViewService = function () {
 		return {
 			checked: [],
 			tree: [],
@@ -30,18 +30,19 @@
 				return Object.assign({}, this.defaultOpts, preOpts);
 			},
 
-			setTree(data, parent) {
-				this.tree = this.getTree(data, parent);
+			setTree(data, parent, selected, first) {
+				this.tree = this.getTree(data, parent, selected, first);
 				this.clearEmptyNodeChilds();
 				this.defaultOpts.data = this.tree;
 			},
 
-			getTree(array, parent, first = true) {
-				const parents = array.map(x => x.parent).filter((v, i, s) => s.indexOf(v) === i);
+			getTree(array, parent, selected = null, first = true) {
+				let ids = array.map(x => x.id).filter((v, i, s) => s.indexOf(v) === i);
+				let parents = array.map(x => x.parent).filter((v, i, s) => s.indexOf(v) === i);
 				let out = array
 				.filter(el => {
 					if (first) {
-						const cond = parents.includes(el.id);
+						const cond = parents.includes(el.id) && !ids.includes(el.parent);
 						if (cond) return true;
 					}
 					return el.parent === parent;
@@ -52,13 +53,15 @@
 					return {
 						id,
 						text: name,
+						backColor: id === selected ? '#ede8ff9e' : '', 
+						color: id === selected ? '#0e0e0e' : '',
 						state: {
 							checked: false,
 							disabled: false,
 							expanded: true,
 							selected: false
 						},
-						nodes: this.getTree(array, id, false),
+						nodes: this.getTree(array, id, selected, false),
 					};
 				});
 				return out;
@@ -76,5 +79,4 @@
 			}
 		};
 	};
-	window.TreeViewService = new TreeViewService();
 })(window);

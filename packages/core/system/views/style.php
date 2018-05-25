@@ -183,15 +183,7 @@
         <h4>Место в каталоге</h4>
       </div>
       <div class="col-sm-10">
-        <h5>
-          <? 
-            if (is_null($parent)) {
-              echo 'Данный стиль является родительским';
-            } else {
-              echo $parent['Name_ru'];
-            }
-          ?>
-        </h5>
+        <div id="catalog" />
       </div>
     </div>
     <div class="row">
@@ -233,13 +225,33 @@
     document.addEventListener('DOMContentLoaded', function() {
       const id = new URL(location.href).searchParams.get('idstyle');
       const tree = [];
+
+
+      $.ajax({
+        dataType: "json",
+        method: 'GET',
+        url: `/php/getStylePath.php?id=${id}`,
+      }).done(function (data) {
+        const treeview = new TreeViewService();
+        treeview.setTree(data, null, id);
+        var options = treeview.getOpts({
+          showCheckbox: false,
+          collapseIcon: '',
+        });
+
+        $('#catalog').treeview(options);
+      }).error(function (err) {
+        console.error(err);
+      });
+
       $.ajax({
         dataType: "json",
         method: 'GET',
         url: `/php/getStyleSignes.php?id=${id}`,
       }).done(function (data) {
-        TreeViewService.setTree(data, null);
-        var options = TreeViewService.getOpts({
+        const treeview = new TreeViewService();
+        treeview.setTree(data, null);
+        var options = treeview.getOpts({
           showCheckbox: false
         });
 

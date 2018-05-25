@@ -1,5 +1,5 @@
 <?php
-    $connection_link = mysqli_connect("localhost", "root", "", "DPr");
+    $connection_link = mysqli_connect("localhost", "root", "0934551041", "DPr");
 
     mysqli_query($connection_link, "SET CHARACTER SET 'utf8'", $bd);
     mysqli_query($connection_link, "set character_set_client='utf8'");
