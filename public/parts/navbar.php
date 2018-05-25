@@ -6,27 +6,27 @@
 			<div class="collapse navbar-collapse" id="top-navbar-1">
 				<ul class="nav navbar-nav navbar-right">
 					<li>
-						<a href="index.php">
+						<a href="/">
 							<i class="fa fa-home fa-lg"></i>
 							<br>Главная</a>
 					</li>
 					<li>
-						<a href="styles.php">
+						<a href="/styles">
 							<i class="fa fa-camera-retro fa-lg"></i>
 							<br>Стили</a>
 					</li>
 					<li>
-						<a href="hierarchy.php">
+						<a href="/hierarchy">
 							<i class="glyphicon glyphicon-scissors fa-lg"></i>
 							<br>Иерархия</a>
 					</li>
 					<li>
-						<a href="signes.php">
+						<a href="/signes">
 							<i class="fa fa-key fa-lg"></i>
 							<br>Ключевые признаки</a>
 					</li>
 					<li>
-						<a href="findstyle.php">
+						<a href="/findstyle">
 							<i class="fa fa-search fa-lg"></i>
 							<br>Поиск
 							<br>
@@ -40,10 +40,10 @@
 						</a>
 						<ul class="dropdown-menu" role="menu">
 							<li>
-								<a href="sign-up.php">Регистрация</a>
+								<a href="/sign-up">Регистрация</a>
 							</li>
 							<li>
-								<a href="login.php">Вход</a>
+								<a href="/login">Вход</a>
 							</li>
 						</ul>
 					</li>

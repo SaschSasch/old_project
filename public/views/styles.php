@@ -31,7 +31,7 @@
             $result = mysqli_query($connection_link,"SELECT Nomenclature_Id, Name_ru, Description FROM Taxon") or die(mysqli_error);
             $index = 0;
             while ($row = $result->fetch_assoc()) {
-                echo '<a href="style.php?idstyle='.$row['Nomenclature_Id'].'">
+                echo '<a href="style/'.$row['Nomenclature_Id'].'">
                 <div class="col-xs-12 col-sm-4 col-md-3 portfolio-masonry" ';
                 if ($index % 4 === 0) echo 'style="clear: both;"';
                 echo'>

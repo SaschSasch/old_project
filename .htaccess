@@ -1,4 +1,5 @@
-Redirect /index.php /public/views/index.php
-Redirect /index.html /public/views/index.php
-Redirect /^ /public/views/index.php
+RewriteEngine on
+RewriteRule ^$ /public/views/index.php [NC]
+RewriteRule ^([A-z-]+)$ /public/views/$0.php [NC]
+RewriteRule ^style/([0-9]+)/?$ /public/views/style.php?idstyle=$1 [NC]
 ErrorDocument 404 /public/views/404.php

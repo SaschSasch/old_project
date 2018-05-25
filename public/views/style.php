@@ -95,7 +95,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      const id = new URL(location.href).searchParams.get('idstyle');
+      const [id] = location.pathname.split('/').slice(-1);
 
       $.ajax({
         dataType: "json",
