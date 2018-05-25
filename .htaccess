@@ -1,3 +1,4 @@
 Redirect /index.php /packages/core/system/views/index.php
+Redirect /index.html /packages/core/system/views/index.php
 Redirect /^ /packages/core/system/views/index.php
 ErrorDocument 404 /packages/core/system/views/404.php
