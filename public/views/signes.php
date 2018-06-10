@@ -22,124 +22,6 @@
     </div>
   </div>
 
-  <script>
-    let tree = [];
-    let checked = [];
-    $(document).ready(function () {
-      $.ajax({
-        dataType: "json",
-        method: 'GET',
-        url: '/api/getSignes.php',
-      }).done(function (data) {
-        console.log('wtf', data);
-        // recursive(data.slice(0, 5), null, tree);
-        tree = getTree(data, null);
-        console.log('tree', tree);
-        clearEmptyNodeChilds(tree);
-        var options = {
-          bootstrap2: false,
-          showTags: true,
-          levels: 10,
-          highlightSelected: false,
-          multiSelect: true,
-          showCheckbox: true,
-          onNodeChecked: function (event, data) {
-            if (checked.indexOf(data.id) === -1)
-              checked.push(data.id);
-            console.log(checked);
-          },
-          onNodeUnchecked: function (event, data) {
-            if (checked.indexOf(data.id) !== -1)
-              checked.pop(checked.indexOf(data.id));
-            console.log(checked);
-          },
-          data: tree
-        };
-        console.log('wtf2', options.data, tree);
-        $('#treeview').treeview(options);
-      }).error(function (err) {
-        console.error(err);
-      });
-
-      function getTree(array, parent) {
-        let out = array.filter(function (el) {
-          return el.parent === parent;
-        }).map(function (root) {
-          const {
-            id,
-            name
-          } = root;
-          // console.log(`el ${id} is leaf for ${parent}`);
-          return {
-            id,
-            text: name,
-            state: {
-              checked: false,
-              disabled: false,
-              expanded: false,
-              selected: false
-            },
-            nodes: getTree(array, id),
-          };
-        });
-        return out;
-      }
-
-      function clearEmptyNodeChilds(array) {
-        $.each(array, function (key, value) {
-          if (value.nodes.length !== 0) {
-            clearEmptyNodeChilds(value.nodes)
-          } else {
-            delete value.nodes;
-          }
-        });
-      }
-
-      // $('#treeview').on('nodeChecked', function(event, data) {
-      //   console.log(event, data);
-      //   // checked.push();
-      // });
-    });
-
-    function getChecked() {
-      var query = checked.join(',');
-      $('#result').empty();
-      $.getJSON("/api/findSignes.php", {
-        ask: query
-      }, function (data) { // путь к php поменять
-        // console.log('test', data, data[0]);
-        var parent = $('#result');
-        var li = document.createElement('li');
-        var summ = 0;
-        $.each(data, function (key, value) {
-          summ += Number(value.count);
-        });
-        console.log(summ);
-        $.each(data, function (key, value) {
-          value.count = (Number(value.count) / summ * 100).toFixed() + '%';
-        });
-        console.log(data);
-        $.each(data, function (key, value) {
-          var li = document.createElement('li'),
-            br = document.createElement('br'),
-            img = document.createElement('img');
-          $(li).addClass('resultItem').text(value.name + ': ' + value.count);
-          $(img).attr('src', value.photo).css('height', '150px');
-          $(li).append(br).append($(img));
-          $(parent).append(li);
-        });
-      });
-    }
-
-    function uncheckAll() {
-      $('#result').empty();
-      $('#treeview').treeview('uncheckAll', {
-        silent: true
-      });
-      checked = [];
-    }
-  </script>
-
   <!-- Meet Our Team -->
   <div class="team-container">
     <div class="container">
@@ -149,21 +31,25 @@
         </div>
         <div class="col-sm-6 col-md-6 col-lg-6 services-full-width-text wow fadeInLeft">
           <label for="treeview"></label>
-          <div id="treeview" />
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="col-sm-6">
-          <button class="btn btn-primary" onclick="getChecked();">Выбрать</button>
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div id="treeview" ></div>
         </div>
-        <div class="col-sm-6">
-          <button class="btn btn-primary" onclick="uncheckAll();">Очистить</button>
-        </div>
-        <div id="result" class="col-sm-12">
-          <ul style="list-style: none;">
-          </ul>
+        <div class="col-sm-12 col-md-6">
+          <div class="row">
+            <div class="col-sm-6">
+              <button class="btn btn-primary" onclick="getChecked();">Выбрать</button>
+            </div>
+            <div class="col-sm-6">
+              <button class="btn btn-primary" onclick="uncheckAll();">Очистить</button>
+            </div>
+          </div>
+          <div id="checked" class="row col-sm-12"></div>
         </div>
       </div>
+      <div id="result" class="row"></div>
     </div>
   </div>
   </div>
@@ -197,6 +83,93 @@
       </div>
     </div>
   </div>
+
+  <script>
+    const displayed = [];
+    let signes;
+
+    function changeDisplayed(bool, treeview) {
+      $('#checked').empty();
+      treeview.Checked.forEach(val => {
+        const data = signes.find(v => v.id === val);
+
+        let parents = [];
+        let next = data.parent;
+        let i = 0;
+        while (next !== null && i < signes.length) {
+          i++;
+          if (signes[i].parent === next) {
+            let curr = signes.find(v => v.id === next);
+            i = 0;
+            parents.unshift(`${curr.name} -> `);
+            next = curr.parent;
+          }
+        }
+        const p = document.createElement('p');
+        $(p).addClass('choosen-sign').text(parents.join('') + data.name);
+        $('#checked').append(p);
+      });
+    }
+    
+    document.addEventListener('DOMContentLoaded', function() {
+      const [id] = location.pathname.split('/').slice(-1);
+      const treeview = new TreeViewService(changeDisplayed);
+
+      $.ajax({
+        dataType: "json",
+        method: 'GET',
+        url: `/api/getSignes.php`,
+      }).done(function (data) {
+        signes = data;
+        treeview
+          .setNodesState({
+            expanded: false,
+          })
+          .setTree(data, null, id);
+        var options = treeview.getOpts({
+          onhoverColor: '',
+        });
+
+        $('#treeview').treeview(options);
+      }).error(function (err) {
+        console.error(err);
+      });
+
+      window.getChecked = function() {
+        var query = treeview.Checked.join(',');
+        $('#result').empty();
+        $.getJSON("/api/findSignes.php", {
+          ask: query
+        }, data => {
+          data.sort((a,b) => - +a.count + +b.count);
+          let summ = data.reduce((r, v) => {
+            return r + +v.count;
+          }, 0);
+          data.forEach(value => {
+            value.count = (+value.count / summ * 100).toFixed() + '%';
+          }); 
+          data.forEach(value => {
+            var div = document.createElement('div'),
+              br = document.createElement('br'),
+              img = document.createElement('img');
+            $(div).addClass('resultItem col-sm-12 col-md-4').text(value.name + ': ' + value.count);
+            $(img).attr('src', value.pic).css('height', '250px');
+            $(img).attr('onerror', 'this.onerror=null;this.src="https://placeimg.com/200/300/animals";')
+            $(div).append(br).append($(img));
+            $('#result').append(div);
+          });
+        });
+      }
+      
+      window.uncheckAll = function() {
+        $('#result').empty();
+        $('#treeview').treeview('uncheckAll', {
+          silent: true
+        });
+        treeview.clearChecked();
+      }
+    });
+  </script>
 
   <!-- Javascript -->
   <? include('../parts/scripts.php'); ?>
